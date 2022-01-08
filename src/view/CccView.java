@@ -75,7 +75,7 @@ public class CccView extends JPanel {
     }
 
     private void initGoodUsersTable() {
-        String columns[] = {"USER ID", "First Name", "Last Name", "AccountID"};
+        String columns[] = {"User ID", "Email", "Iban"};
         String data[][]  = null;
 
         tableModel = new DefaultTableModel(data, columns);
@@ -83,6 +83,7 @@ public class CccView extends JPanel {
 
         goodUsersTable.setCellSelectionEnabled(false);
         goodUsersTable.setShowVerticalLines(false);
+        goodUsersTable.getColumnModel().getColumn(0);
         this.add(goodUsersTable, BorderLayout.CENTER);
     }
 

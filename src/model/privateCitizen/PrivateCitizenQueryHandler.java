@@ -30,7 +30,8 @@ public class PrivateCitizenQueryHandler {
     private static void insertAccount(int accountID, PrivateCitizen privateCitizen) throws SQLException {
         String query;
 
-        query = " INSERT INTO Account VALUES (" + accountID + "," + privateCitizen.getPrivateCitizenAccount().getIban() + "," + privateCitizen.getPrivateCitizenAccount().getExpDate() + "," + true + ")" + ";" ;
+        query = " INSERT INTO Account VALUES (" + accountID + "," + privateCitizen.getPrivateCitizenAccount().getIban() + ","
+                + privateCitizen.getPrivateCitizenAccount().getExpDate() + "," + true + "," + 0 + ")" + ";" ;
 
         System.out.println("SQL Query: " + query);
         stmt.executeUpdate(query);
@@ -39,7 +40,7 @@ public class PrivateCitizenQueryHandler {
     private static void insertClientAccount(int clientAccountID) throws SQLException {
         String query;
 
-        query = " INSERT INTO Client_account VALUES (" + "0" + "," + clientAccountID + ")" + ";" ;
+        query = " INSERT INTO Client_account VALUES (" + "5000" + "," + "5000" + "," + clientAccountID + ")" + ";" ;
         System.out.println("SQL Query: " + query);
 
         stmt.executeUpdate(query);

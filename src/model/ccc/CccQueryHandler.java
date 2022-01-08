@@ -17,24 +17,23 @@ public class CccQueryHandler {
     }
 
     public static String[][] getGoodUsers() throws SQLException {
-        String table = "Supplier";
+        String table = "(Select * FROM USR_type u, Account a Where (u.USR_ID = a.Account_ID) and (a.Account_owedToCCC = 0)) aa;";
         int numberOfGoodUsers = CccQueryHandler.count(table);
-        String[][] data = new String[numberOfGoodUsers][4];
+        String[][] data = new String[numberOfGoodUsers][3];
 
-        String query    = " Select * FROM Supplier; ";
-        ResultSet rs = stmt.executeQuery(query);
+        String query    = " Select * FROM USR_type u, Account a Where (u.USR_ID = a.Account_ID) and (a.Account_owedToCCC = 0); ";
+        ResultSet rs    = stmt.executeQuery(query);
+
         int user = 0;
         try {
             while (rs.next()) {
-                String id        = rs.getString("F_USR_id");
-                String firstName = rs.getString("Supp_First_Name");
-                String lastName  = rs.getString("Supp_Last_Name");
-                String accountId = rs.getString("F_Supp_AccountID");
+                String id        = rs.getString("USR_id");
+                String email     = rs.getString("USR_email");
+                String iban      = rs.getString("Account_IBAN");
 
                 data[user][0] = id;
-                data[user][1] = firstName;
-                data[user][2] = lastName;
-                data[user][3] = accountId;
+                data[user][1] = email;
+                data[user][2] = iban;
                 user++;
             }
         }

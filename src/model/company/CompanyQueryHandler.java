@@ -29,7 +29,7 @@ public class CompanyQueryHandler {
     private static void insertAccount(int accountID, Company company) throws SQLException {
         String query;
 
-        query = " INSERT INTO Account VALUES (" + accountID + "," + company.getCompanyAccount().getIban() + "," + company.getCompanyAccount().getExpDate() + "," + true + ")" + ";" ;
+        query = " INSERT INTO Account VALUES (" + accountID + "," + company.getCompanyAccount().getIban() + "," + company.getCompanyAccount().getExpDate() + "," + true + "," + 1 + ")" + ";" ;
 
         System.out.println("SQL Query: " + query);
         stmt.executeUpdate(query);
@@ -38,7 +38,7 @@ public class CompanyQueryHandler {
     private static void insertClientAccount(int clientAccountID) throws SQLException {
         String query;
 
-        query = " INSERT INTO Client_account VALUES (" + "0" + "," + clientAccountID + ")" + ";" ;
+        query = " INSERT INTO Client_account VALUES (" + "5000" + "," + "5000" + "," + clientAccountID + ")" + ";" ;
         System.out.println("SQL Query: " + query);
 
         stmt.executeUpdate(query);

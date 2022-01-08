@@ -29,7 +29,7 @@ public class SupplierQueryHandler {
     private static void insertAccount(int accountID, Supplier supplier) throws SQLException {
         String query;
 
-        query = " INSERT INTO Account VALUES (" + accountID + "," + supplier.getSupplierAccount().getIban() + "," + supplier.getSupplierAccount().getExpDate() + "," + true + ")" + ";" ;
+        query = " INSERT INTO Account VALUES (" + accountID + "," + supplier.getSupplierAccount().getIban() + "," + supplier.getSupplierAccount().getExpDate() + "," + true + "," + 1 + ")" + ";" ;
 
         System.out.println("SQL Query: " + query);
         stmt.executeUpdate(query);
@@ -38,7 +38,7 @@ public class SupplierQueryHandler {
     private static void insertSupplierAccount(int clientAccountID, SupplierAccount supplierAccount) throws SQLException {
         String query;
 
-        query = " INSERT INTO Supplier_account VALUES (" + supplierAccount.getCommission() + "," + supplierAccount.getOwedToCCC() +
+        query = " INSERT INTO Supplier_account VALUES (" + supplierAccount.getCommission() +
                 "," + supplierAccount.getNetIncome() + "," + clientAccountID + ")" + ";" ;
         System.out.println("SQL Query: " + query);
 
