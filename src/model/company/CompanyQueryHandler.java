@@ -10,7 +10,7 @@ public class CompanyQueryHandler {
 
     private static Statement stmt;
 
-    public CompanyQueryHandler(Statement stmt) throws SQLException {
+    public CompanyQueryHandler(Statement stmt) {
         CompanyQueryHandler.stmt = stmt;
     }
 

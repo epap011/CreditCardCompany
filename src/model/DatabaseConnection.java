@@ -17,13 +17,10 @@ public class DatabaseConnection {
             connection = DriverManager.getConnection(url, username, password);
             statement = connection.createStatement();
             if(connection != null) System.out.println("Database connection established!");
-
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
-
     public Connection getConnection() { return connection; }
     public Statement getStatement() { return statement; }
 }

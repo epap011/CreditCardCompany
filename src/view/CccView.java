@@ -2,12 +2,20 @@ package view;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CccView extends JPanel {
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
+    private JTable goodUsersTable;
+    private DefaultTableModel tableModel;
+    private JButton goodUsersButton;
+    private JButton badUsersButton;
+    private JButton mostActiveEmployee;
 
     public CccView(GUI gui) {
 
@@ -24,15 +32,13 @@ public class CccView extends JPanel {
         buttonsPanel.setBackground(new Color(255,252,252));
         this.add(buttonsPanel, BorderLayout.NORTH);
 
-        JButton goodUsersButton = new JButton("Good Users");
+        initGoodUsersTable();
+
+        goodUsersButton = new JButton("Good Users");
         personalizeButton(goodUsersButton);
-        goodUsersButton.addActionListener(e -> {
-            JFrame frame = new JFrame();
-            JOptionPane.showMessageDialog(frame, "still working on that feature");
-        });
         buttonsPanel.add(goodUsersButton);
 
-        JButton badUsersButton = new JButton("Bad Users");
+        badUsersButton = new JButton("Bad Users");
         personalizeButton(badUsersButton);
         badUsersButton.addActionListener(e -> {
             JFrame frame = new JFrame();
@@ -40,7 +46,7 @@ public class CccView extends JPanel {
         });
         buttonsPanel.add(badUsersButton);
 
-        JButton mostActiveEmployee = new JButton("Most Active Employee");
+        mostActiveEmployee = new JButton("Most Active Employee");
         personalizeButton(mostActiveEmployee);
         mostActiveEmployee.addActionListener(e -> {
             JFrame frame = new JFrame();
@@ -52,7 +58,6 @@ public class CccView extends JPanel {
         personalizeButton(homeButton);
         homeButton.addActionListener(e -> cardLayout.show(cardPanel, "home"));
         this.add(homeButton, BorderLayout.SOUTH);
-
     }
 
     private void personalizeButton(JButton button) {
@@ -67,5 +72,31 @@ public class CccView extends JPanel {
                 return new Color(250, 230,230);
             }
         });
+    }
+
+    private void initGoodUsersTable() {
+        String columns[] = {"USER ID", "First Name", "Last Name", "AccountID"};
+        String data[][]  = null;
+
+        tableModel = new DefaultTableModel(data, columns);
+        goodUsersTable = new JTable(tableModel);
+
+        goodUsersTable.setCellSelectionEnabled(false);
+        goodUsersTable.setShowVerticalLines(false);
+        this.add(goodUsersTable, BorderLayout.CENTER);
+    }
+
+    public void cleanTableModel() {
+        tableModel.setRowCount(0);
+    }
+
+    public void setGoodUsersData(String[][] data) {
+        for (String[] datum : data) {
+            tableModel.addRow(datum);
+        }
+    }
+
+    public void addGoodUsersButtonListener(ActionListener listenerForDoneButton) {
+        goodUsersButton.addActionListener(listenerForDoneButton);
     }
 }

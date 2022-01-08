@@ -70,11 +70,11 @@ public class GUI extends JFrame{
         return companyRegistrationPanel;
     }
 
-    public PrivateCitizenRegistrationView getPrivateCitizenRegistrationPanel() {
-        return privateCitizenRegistrationPanel;
-    }
+    public PrivateCitizenRegistrationView getPrivateCitizenRegistrationPanel() { return privateCitizenRegistrationPanel; }
 
     public SupplierRegistrationView getSupplierRegistrationPanel() {
         return supplierRegistrationPanel;
     }
+
+    public CccView getCccView() { return cccView; }
 }
