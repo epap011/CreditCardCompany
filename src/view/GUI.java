@@ -16,12 +16,12 @@ public class GUI extends JFrame{
     private CompanyRegistrationView companyRegistrationPanel;
     private PrivateCitizenRegistrationView privateCitizenRegistrationPanel;
     private SupplierRegistrationView supplierRegistrationPanel;
+    private CccView cccView;
     private OverviewView overviewPanel;
     private CardLayout    cardLayout;
 
     public GUI() {
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(220,220,240)));
-        //UIManager.put("ComboBox.selectionForeground", new ColorUIResource(new Color(250,250,250)));
 
         this.setTitle("CCC App");
         this.setSize(825, 550);
@@ -47,6 +47,8 @@ public class GUI extends JFrame{
          privateCitizenRegistrationPanel = new PrivateCitizenRegistrationView(this);
          supplierRegistrationPanel       = new SupplierRegistrationView(this);
          overviewPanel                   = new OverviewView(this);
+         cccView                         = new CccView(this);
+
 
 
          cardPanel.add(homePanel, "home");
@@ -55,6 +57,7 @@ public class GUI extends JFrame{
          cardPanel.add(privateCitizenRegistrationPanel, "privateCitizenReg");
          cardPanel.add(supplierRegistrationPanel, "supplierReg");
          cardPanel.add(overviewPanel, "overview");
+         cardPanel.add(cccView, "ccc");
 
          this.add(cardPanel);
     }

@@ -31,9 +31,15 @@ public class SupplierRegistrationView extends JPanel {
 
     private final JButton doneButton                  = new JButton("Done");
 
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+
     public SupplierRegistrationView(GUI gui) {
         this.setBackground(new Color(248,248,255));
-        doneButton.addActionListener(e -> gui.getCardLayout().show(gui.getCardPanel(), "overview"));
+        this.cardPanel  = gui.getCardPanel();
+        this.cardLayout = gui.getCardLayout();
+
+        doneButton.addActionListener(e -> cardLayout.show(cardPanel, "overview"));
         this.setLayout(null);
         initComponents();
     }

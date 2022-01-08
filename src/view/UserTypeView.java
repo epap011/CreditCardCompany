@@ -14,40 +14,30 @@ public class UserTypeView extends JPanel {
     private JButton privateCitizenButton;
     private JButton supplierButton;
 
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+
     public UserTypeView(GUI gui) {
         this.setBackground(new Color(248,248,255));
         this.setLayout(new GridBagLayout());
+        this.cardPanel  = gui.getCardPanel();
+        this.cardLayout = gui.getCardLayout();
 
         companyButton        = new JButton("Company");
         privateCitizenButton = new JButton("Private Citizen");
         supplierButton       = new JButton("Supplier");
 
-        companyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.getCardLayout().show(gui.getCardPanel(), "companyReg");
-            }
-        });
+        companyButton.addActionListener(e -> cardLayout.show(cardPanel, "companyReg"));
         personalizeButton(companyButton);
         this.add(companyButton);
         this.add(Box.createHorizontalStrut(10));
 
-        privateCitizenButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.getCardLayout().show(gui.getCardPanel(), "privateCitizenReg");
-            }
-        });
+        privateCitizenButton.addActionListener(e -> cardLayout.show(cardPanel, "privateCitizenReg"));
         personalizeButton(privateCitizenButton);
         this.add(privateCitizenButton);
         this.add(Box.createHorizontalStrut(10));
 
-        supplierButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.getCardLayout().show(gui.getCardPanel(), "supplierReg");
-            }
-        });
+        supplierButton.addActionListener(e -> cardLayout.show(cardPanel, "supplierReg"));
         personalizeButton(supplierButton);
         this.add(supplierButton);
     }

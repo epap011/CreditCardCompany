@@ -49,8 +49,7 @@ public class HomeView extends JPanel {
         loginAsCccButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                JOptionPane.showMessageDialog(frame, "still working on that feature");
+                cardLayout.show(cardPanel, "ccc");
             }
         });
 
