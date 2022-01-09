@@ -5,6 +5,7 @@ import javax.swing.plaf.metal.MetalToggleButtonUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CccView extends JPanel {
@@ -56,12 +57,16 @@ public class CccView extends JPanel {
 
         JButton homeButton = new JButton("Home");
         personalizeButton(homeButton);
-        homeButton.addActionListener(e -> cardLayout.show(cardPanel, "home"));
+
+        homeButton.addActionListener(e -> {
+            cleanTableModel();
+            cardLayout.show(cardPanel, "home");
+        });
         this.add(homeButton, BorderLayout.SOUTH);
     }
 
     private void personalizeButton(JButton button) {
-        button.setPreferredSize(new Dimension(200,30));
+        button.setPreferredSize(new Dimension(150,30));
         button.setBackground(new Color(255,248,248));
         button.setForeground(new Color(150,5,40));
         button.setFocusPainted(false);
@@ -76,15 +81,22 @@ public class CccView extends JPanel {
 
     private void initGoodUsersTable() {
         String columns[] = {"User ID", "Email", "Iban"};
-        String data[][]  = null;
 
-        tableModel = new DefaultTableModel(data, columns);
+        tableModel = new DefaultTableModel();
         goodUsersTable = new JTable(tableModel);
+        goodUsersTable.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 16));
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Email");
+        tableModel.addColumn("Iban");
 
         goodUsersTable.setCellSelectionEnabled(false);
-        goodUsersTable.setShowVerticalLines(false);
-        goodUsersTable.getColumnModel().getColumn(0);
-        this.add(goodUsersTable, BorderLayout.CENTER);
+        goodUsersTable.setShowVerticalLines(true);
+        goodUsersTable.setDragEnabled(false);
+        goodUsersTable.getTableHeader().setReorderingAllowed(false);
+        goodUsersTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        goodUsersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        goodUsersTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+        this.add(new JScrollPane(goodUsersTable), BorderLayout.CENTER);
     }
 
     public void cleanTableModel() {
