@@ -16,6 +16,7 @@ public class CccController {
 
         this.theView.addGoodUsersButtonListener(new GoodUsersButton());
         this.theView.addBadUsersButtonListener(new BadUsersButton());
+        this.theView.addMostActiveEmployeeButtonListener(new MostActiveEmployeeButton());
     }
 
     class GoodUsersButton implements ActionListener {
@@ -45,4 +46,19 @@ public class CccController {
             }
         }
     }
+
+    class MostActiveEmployeeButton implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                theView.getTablesCardLayout().show(theView.getTablesPanel(), "mostActiveEmployeeTable");
+                theView.cleanMostActiveEmployeeTableModel();
+                theView.setMostActiveEmployeeData(CccQueryHandler.getMostActiveEmployee());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 }

@@ -72,6 +72,45 @@ public class CccQueryHandler {
         return data;
     }
 
+    public static String[][] getMostActiveEmployee() throws SQLException {
+        String table = "(SELECT F_Supp_AccountID,COUNT(F_Supp_AccountID) AS cnt " +
+                "FROM Transaction " +
+                "GROUP BY F_Supp_AccountID " +
+                "HAVING cnt=(SELECT COUNT(F_Supp_AccountID) as count " +
+                "FROM Transaction " +
+                "GROUP BY F_Supp_AccountID " +
+                "ORDER BY count desc limit 1)) aaa;";
+        int numberOfGoodUsers = CccQueryHandler.count(table);
+        String[][] data = new String[numberOfGoodUsers][3];
+        
+        String query = "SELECT F_Supp_AccountID,COUNT(F_Supp_AccountID) AS cnt " +
+                "FROM Transaction " +
+                "GROUP BY F_Supp_AccountID " +
+                "HAVING cnt=(SELECT COUNT(F_Supp_AccountID) as count " +
+                "FROM Transaction " +
+                "GROUP BY F_Supp_AccountID " +
+                "ORDER BY count desc limit 1);";
+
+        ResultSet rs    = stmt.executeQuery(query);
+
+        int user = 0;
+        try {
+            while (rs.next()) {
+                String id        = rs.getString("F_Supp_AccountID");
+                String cnt       = rs.getString("cnt");
+
+                data[user][0] = id;
+                data[user][1] = cnt;
+                user++;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
     private static int count(String table) throws SQLException {
         String query = "SELECT COUNT(*) FROM " + table + ";";
         ResultSet rs = stmt.executeQuery(query);

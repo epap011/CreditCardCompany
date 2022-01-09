@@ -16,12 +16,15 @@ public class CccView extends JPanel {
     private DefaultTableModel goodUsersTableModel;
     private JTable badUsersTable;
     private DefaultTableModel badUsersTableModel;
+    private JTable mostActiveEmployeeTable;
+    private DefaultTableModel mostActiveEmployeeTableModel;
+
     private JButton goodUsersButton;
     private JButton badUsersButton;
-    private JButton mostActiveEmployee;
+    private JButton mostActiveEmployeeButton;
 
-    private CardLayout tablesCardLayout; //new stuff
-    private JPanel tablesPanel; //new stuff
+    private CardLayout tablesCardLayout;
+    private JPanel tablesPanel;
 
     public CccView(GUI gui) {
 
@@ -38,15 +41,16 @@ public class CccView extends JPanel {
         buttonsPanel.setBackground(new Color(255,252,252));
         this.add(buttonsPanel, BorderLayout.NORTH);
 
-        tablesCardLayout = new CardLayout(); //new stuff
-        tablesPanel      = new JPanel(); //new stuff
+        tablesCardLayout = new CardLayout();
+        tablesPanel      = new JPanel();
 
-        tablesPanel.setLayout(tablesCardLayout); //new stuff
+        tablesPanel.setLayout(tablesCardLayout);
 
         initGoodUsersTable();
         initBadUsersTable();
+        initMostActiveEmployeeTable();
 
-        this.add(tablesPanel, BorderLayout.CENTER); //new stuff
+        this.add(tablesPanel, BorderLayout.CENTER);
 
         goodUsersButton = new JButton("Good Users");
         personalizeButton(goodUsersButton);
@@ -56,13 +60,9 @@ public class CccView extends JPanel {
         personalizeButton(badUsersButton);
         buttonsPanel.add(badUsersButton);
 
-        mostActiveEmployee = new JButton("Most Active Employee");
-        personalizeButton(mostActiveEmployee);
-        mostActiveEmployee.addActionListener(e -> {
-            JFrame frame = new JFrame();
-            JOptionPane.showMessageDialog(frame, "still working on that feature");
-        });
-        buttonsPanel.add(mostActiveEmployee);
+        mostActiveEmployeeButton = new JButton("Most Active Employee");
+        personalizeButton(mostActiveEmployeeButton);
+        buttonsPanel.add(mostActiveEmployeeButton);
 
         JButton homeButton = new JButton("Home");
         personalizeButton(homeButton);
@@ -94,8 +94,6 @@ public class CccView extends JPanel {
     }
 
     private void initGoodUsersTable() {
-        String columns[] = {"User ID", "Email", "Iban"};
-
         goodUsersTableModel = new DefaultTableModel();
         goodUsersTable = new JTable(goodUsersTableModel);
         goodUsersTable.setFont(new Font("Times New Roman", Font.PLAIN, 16));
@@ -110,14 +108,11 @@ public class CccView extends JPanel {
         goodUsersTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         goodUsersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
         goodUsersTable.getColumnModel().getColumn(1).setPreferredWidth(300);
-        //this.add(new JScrollPane(goodUsersTable), BorderLayout.CENTER);
-        JScrollPane jScrollPaneG = new JScrollPane(goodUsersTable); //new stuff
-        tablesPanel.add(jScrollPaneG,"goodUsersTable"); //new stuff
+        JScrollPane jScrollPaneG = new JScrollPane(goodUsersTable);
+        tablesPanel.add(jScrollPaneG,"goodUsersTable");
     }
 
     private void initBadUsersTable() {
-        String columns[] = {"User ID", "Email", "Iban"};
-
         badUsersTableModel = new DefaultTableModel();
         badUsersTable = new JTable(badUsersTableModel);
         badUsersTable.setFont(new Font("Times New Roman", Font.PLAIN, 16));
@@ -132,9 +127,25 @@ public class CccView extends JPanel {
         badUsersTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         badUsersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
         badUsersTable.getColumnModel().getColumn(1).setPreferredWidth(300);
-        //this.add(new JScrollPane(badUsersTable), BorderLayout.CENTER);
-        JScrollPane jScrollPaneB = new JScrollPane(badUsersTable); //new stuff
-        tablesPanel.add(jScrollPaneB,"badUsersTable"); //new stuff
+        JScrollPane jScrollPaneB = new JScrollPane(badUsersTable);
+        tablesPanel.add(jScrollPaneB,"badUsersTable");
+    }
+
+    private void initMostActiveEmployeeTable() {
+        mostActiveEmployeeTableModel = new DefaultTableModel();
+        mostActiveEmployeeTable = new JTable(mostActiveEmployeeTableModel);
+        mostActiveEmployeeTable.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        mostActiveEmployeeTableModel.addColumn("Supplier ID");
+        mostActiveEmployeeTableModel.addColumn("Transactions");
+
+        mostActiveEmployeeTable.setCellSelectionEnabled(false);
+        mostActiveEmployeeTable.setShowVerticalLines(true);
+        mostActiveEmployeeTable.setDragEnabled(false);
+        mostActiveEmployeeTable.getTableHeader().setReorderingAllowed(false);
+        mostActiveEmployeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        mostActiveEmployeeTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        JScrollPane jScrollPaneB = new JScrollPane(mostActiveEmployeeTable);
+        tablesPanel.add(jScrollPaneB,"mostActiveEmployeeTable");
     }
 
 
@@ -144,6 +155,10 @@ public class CccView extends JPanel {
 
     public void cleanBadUsersTableModel() {
         badUsersTableModel.setRowCount(0);
+    }
+
+    public void cleanMostActiveEmployeeTableModel() {
+        mostActiveEmployeeTableModel.setRowCount(0);
     }
 
     public void setGoodUsersData(String[][] data) {
@@ -158,11 +173,21 @@ public class CccView extends JPanel {
         }
     }
 
+    public void setMostActiveEmployeeData(String[][] data) {
+        for (String[] datum : data) {
+            mostActiveEmployeeTableModel.addRow(datum);
+        }
+    }
+
     public void addGoodUsersButtonListener(ActionListener listenerForGoodUsersButton) {
         goodUsersButton.addActionListener(listenerForGoodUsersButton);
     }
 
     public void addBadUsersButtonListener(ActionListener listenerForBadUsersButton) {
         badUsersButton.addActionListener(listenerForBadUsersButton);
+    }
+
+    public void addMostActiveEmployeeButtonListener(ActionListener mostActiveEmployee) {
+        mostActiveEmployeeButton.addActionListener(mostActiveEmployee);
     }
 }
