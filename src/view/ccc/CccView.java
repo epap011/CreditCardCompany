@@ -1,4 +1,6 @@
-package view;
+package view.ccc;
+
+import view.GUI;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
@@ -22,9 +24,12 @@ public class CccView extends JPanel {
     private JButton goodUsersButton;
     private JButton badUsersButton;
     private JButton mostActiveEmployeeButton;
+    private JButton deleteAccountButton;
+    private JButton clearTableButton;
 
     private CardLayout tablesCardLayout;
     private JPanel tablesPanel;
+    private DeleteAccountView deleteAccountView;
 
     public CccView(GUI gui) {
 
@@ -63,6 +68,30 @@ public class CccView extends JPanel {
         mostActiveEmployeeButton = new JButton("Most Active Employee");
         personalizeButton(mostActiveEmployeeButton);
         buttonsPanel.add(mostActiveEmployeeButton);
+
+        deleteAccountButton = new JButton("Delete Account");
+        personalizeButton(deleteAccountButton);
+        buttonsPanel.add(deleteAccountButton);
+        deleteAccountView = new DeleteAccountView();
+        tablesPanel.add(deleteAccountView, "deleteAccount");
+        deleteAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tablesCardLayout.show(tablesPanel, "deleteAccount");
+            }
+        });
+
+        clearTableButton = new JButton("Clear Table");
+        personalizeButton(clearTableButton);
+        buttonsPanel.add(clearTableButton);
+        clearTableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cleanGoodUsersTableModel();
+                cleanBadUsersTableModel();
+                cleanMostActiveEmployeeTableModel();
+            }
+        });
 
         JButton homeButton = new JButton("Home");
         personalizeButton(homeButton);
@@ -148,6 +177,9 @@ public class CccView extends JPanel {
         tablesPanel.add(jScrollPaneB,"mostActiveEmployeeTable");
     }
 
+    public void addDeleteButtonActionListener(ActionListener deleteButtonActionListener) {
+        deleteAccountButton.addActionListener(deleteButtonActionListener);
+    }
 
     public void cleanGoodUsersTableModel() {
         goodUsersTableModel.setRowCount(0);
@@ -190,4 +222,9 @@ public class CccView extends JPanel {
     public void addMostActiveEmployeeButtonListener(ActionListener mostActiveEmployee) {
         mostActiveEmployeeButton.addActionListener(mostActiveEmployee);
     }
+
+    public DeleteAccountView getDeleteAccountView() {
+        return deleteAccountView;
+    }
+
 }

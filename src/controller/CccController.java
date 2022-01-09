@@ -1,8 +1,9 @@
 package controller;
 
 import model.ccc.CccQueryHandler;
-import view.CccView;
+import view.ccc.CccView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -17,6 +18,8 @@ public class CccController {
         this.theView.addGoodUsersButtonListener(new GoodUsersButton());
         this.theView.addBadUsersButtonListener(new BadUsersButton());
         this.theView.addMostActiveEmployeeButtonListener(new MostActiveEmployeeButton());
+        this.theView.addDeleteButtonActionListener(new DeleteAccountButton());
+        this.theView.getDeleteAccountView().addDeleteButtonActionListener(new DeleteAccountViewButton());
     }
 
     class GoodUsersButton implements ActionListener {
@@ -61,4 +64,27 @@ public class CccController {
         }
     }
 
+    class DeleteAccountButton implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                theView.getDeleteAccountView().setAccountIdsData(CccQueryHandler.getAccountIds());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    class DeleteAccountViewButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                CccQueryHandler.deleteAccount((String)theView.getDeleteAccountView().getComboBoxValue() );
+                theView.getDeleteAccountView().removeItem(theView.getDeleteAccountView().getComboBoxValue());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }

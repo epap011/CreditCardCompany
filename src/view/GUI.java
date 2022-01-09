@@ -1,5 +1,6 @@
 package view;
 
+import view.ccc.CccView;
 import view.registration.CompanyRegistrationView;
 import view.registration.PrivateCitizenRegistrationView;
 import view.registration.SupplierRegistrationView;
