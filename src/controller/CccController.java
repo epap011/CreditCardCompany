@@ -15,6 +15,7 @@ public class CccController {
         this.theView = theView;
 
         this.theView.addGoodUsersButtonListener(new GoodUsersButton());
+        this.theView.addBadUsersButtonListener(new BadUsersButton());
     }
 
     class GoodUsersButton implements ActionListener {
@@ -22,8 +23,23 @@ public class CccController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                theView.cleanTableModel();
+                theView.getTablesCardLayout().show(theView.getTablesPanel(), "goodUsersTable");
+                theView.cleanGoodUsersTableModel();
                 theView.setGoodUsersData(CccQueryHandler.getGoodUsers());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    class BadUsersButton implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                theView.getTablesCardLayout().show(theView.getTablesPanel(), "badUsersTable");
+                theView.cleanBadUsersTableModel();
+                theView.setBadUsersData(CccQueryHandler.getBadUsers());
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

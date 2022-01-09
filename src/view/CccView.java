@@ -13,10 +13,15 @@ public class CccView extends JPanel {
     private CardLayout cardLayout;
     private JPanel cardPanel;
     private JTable goodUsersTable;
-    private DefaultTableModel tableModel;
+    private DefaultTableModel goodUsersTableModel;
+    private JTable badUsersTable;
+    private DefaultTableModel badUsersTableModel;
     private JButton goodUsersButton;
     private JButton badUsersButton;
     private JButton mostActiveEmployee;
+
+    private CardLayout tablesCardLayout; //new stuff
+    private JPanel tablesPanel; //new stuff
 
     public CccView(GUI gui) {
 
@@ -33,7 +38,15 @@ public class CccView extends JPanel {
         buttonsPanel.setBackground(new Color(255,252,252));
         this.add(buttonsPanel, BorderLayout.NORTH);
 
+        tablesCardLayout = new CardLayout(); //new stuff
+        tablesPanel      = new JPanel(); //new stuff
+
+        tablesPanel.setLayout(tablesCardLayout); //new stuff
+
         initGoodUsersTable();
+        initBadUsersTable();
+
+        this.add(tablesPanel, BorderLayout.CENTER); //new stuff
 
         goodUsersButton = new JButton("Good Users");
         personalizeButton(goodUsersButton);
@@ -41,10 +54,6 @@ public class CccView extends JPanel {
 
         badUsersButton = new JButton("Bad Users");
         personalizeButton(badUsersButton);
-        badUsersButton.addActionListener(e -> {
-            JFrame frame = new JFrame();
-            JOptionPane.showMessageDialog(frame, "still working on that feature");
-        });
         buttonsPanel.add(badUsersButton);
 
         mostActiveEmployee = new JButton("Most Active Employee");
@@ -59,11 +68,16 @@ public class CccView extends JPanel {
         personalizeButton(homeButton);
 
         homeButton.addActionListener(e -> {
-            cleanTableModel();
+            cleanGoodUsersTableModel();
+            cleanBadUsersTableModel();
             cardLayout.show(cardPanel, "home");
         });
         this.add(homeButton, BorderLayout.SOUTH);
     }
+
+    public CardLayout getTablesCardLayout() { return tablesCardLayout; }
+
+    public JPanel getTablesPanel() { return tablesPanel; }
 
     private void personalizeButton(JButton button) {
         button.setPreferredSize(new Dimension(150,30));
@@ -82,12 +96,12 @@ public class CccView extends JPanel {
     private void initGoodUsersTable() {
         String columns[] = {"User ID", "Email", "Iban"};
 
-        tableModel = new DefaultTableModel();
-        goodUsersTable = new JTable(tableModel);
-        goodUsersTable.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 16));
-        tableModel.addColumn("ID");
-        tableModel.addColumn("Email");
-        tableModel.addColumn("Iban");
+        goodUsersTableModel = new DefaultTableModel();
+        goodUsersTable = new JTable(goodUsersTableModel);
+        goodUsersTable.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        goodUsersTableModel.addColumn("ID");
+        goodUsersTableModel.addColumn("Email");
+        goodUsersTableModel.addColumn("Iban");
 
         goodUsersTable.setCellSelectionEnabled(false);
         goodUsersTable.setShowVerticalLines(true);
@@ -96,20 +110,59 @@ public class CccView extends JPanel {
         goodUsersTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         goodUsersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
         goodUsersTable.getColumnModel().getColumn(1).setPreferredWidth(300);
-        this.add(new JScrollPane(goodUsersTable), BorderLayout.CENTER);
+        //this.add(new JScrollPane(goodUsersTable), BorderLayout.CENTER);
+        JScrollPane jScrollPaneG = new JScrollPane(goodUsersTable); //new stuff
+        tablesPanel.add(jScrollPaneG,"goodUsersTable"); //new stuff
     }
 
-    public void cleanTableModel() {
-        tableModel.setRowCount(0);
+    private void initBadUsersTable() {
+        String columns[] = {"User ID", "Email", "Iban"};
+
+        badUsersTableModel = new DefaultTableModel();
+        badUsersTable = new JTable(badUsersTableModel);
+        badUsersTable.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        badUsersTableModel.addColumn("ID");
+        badUsersTableModel.addColumn("Email");
+        badUsersTableModel.addColumn("Iban");
+
+        badUsersTable.setCellSelectionEnabled(false);
+        badUsersTable.setShowVerticalLines(true);
+        badUsersTable.setDragEnabled(false);
+        badUsersTable.getTableHeader().setReorderingAllowed(false);
+        badUsersTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        badUsersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        badUsersTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+        //this.add(new JScrollPane(badUsersTable), BorderLayout.CENTER);
+        JScrollPane jScrollPaneB = new JScrollPane(badUsersTable); //new stuff
+        tablesPanel.add(jScrollPaneB,"badUsersTable"); //new stuff
+    }
+
+
+    public void cleanGoodUsersTableModel() {
+        goodUsersTableModel.setRowCount(0);
+    }
+
+    public void cleanBadUsersTableModel() {
+        badUsersTableModel.setRowCount(0);
     }
 
     public void setGoodUsersData(String[][] data) {
         for (String[] datum : data) {
-            tableModel.addRow(datum);
+            goodUsersTableModel.addRow(datum);
         }
     }
 
-    public void addGoodUsersButtonListener(ActionListener listenerForDoneButton) {
-        goodUsersButton.addActionListener(listenerForDoneButton);
+    public void setBadUsersData(String[][] data) {
+        for (String[] datum : data) {
+            badUsersTableModel.addRow(datum);
+        }
+    }
+
+    public void addGoodUsersButtonListener(ActionListener listenerForGoodUsersButton) {
+        goodUsersButton.addActionListener(listenerForGoodUsersButton);
+    }
+
+    public void addBadUsersButtonListener(ActionListener listenerForBadUsersButton) {
+        badUsersButton.addActionListener(listenerForBadUsersButton);
     }
 }
