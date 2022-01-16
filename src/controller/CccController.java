@@ -1,9 +1,8 @@
 package controller;
 
 import model.ccc.CccQueryHandler;
-import view.ccc.CccView;
+import view.cccLogin.CccView;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;

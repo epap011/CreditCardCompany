@@ -1,5 +1,9 @@
 package model;
 
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Generator {
 
     public static String ibanGenerate(){
@@ -43,5 +47,11 @@ public class Generator {
         com = number / 100.0;
 
         return String.valueOf(com);
+    }
+
+    public static String getCurrentDate() {
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        return date.format(now);
     }
 }

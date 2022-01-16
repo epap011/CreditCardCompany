@@ -1,11 +1,10 @@
-package view.ccc;
+package view.cccLogin;
 
 import view.GUI;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

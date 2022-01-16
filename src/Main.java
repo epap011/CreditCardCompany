@@ -1,6 +1,7 @@
 import controller.ControllerContainer;
 import model.DatabaseConnection;
 import model.Generator;
+import model.UserLoginQueryHandler;
 import model.ccc.CccQueryHandler;
 import model.company.CompanyQueryHandler;
 import model.privateCitizen.PrivateCitizenQueryHandler;
@@ -21,6 +22,7 @@ public class Main {
             PrivateCitizenQueryHandler.setStatement(ccc_database_connection.getStatement());
             SupplierQueryHandler.setStatement(ccc_database_connection.getStatement());
             CccQueryHandler.setStatement(ccc_database_connection.getStatement());
+            UserLoginQueryHandler.setStatement(ccc_database_connection.getStatement());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

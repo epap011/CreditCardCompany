@@ -57,8 +57,7 @@ public class HomeView extends JPanel {
         loginAsUserBUtton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                JOptionPane.showMessageDialog(frame, "still working on that feature");
+                cardLayout.show(cardPanel, "userLogin");
             }
         });
 
@@ -75,6 +74,10 @@ public class HomeView extends JPanel {
         this.add(loginAsUserBUtton);
         this.add(Box.createHorizontalStrut(10));
         this.add(register2CccButton);
+    }
+
+    public void addLoginAsUserButtonActionListener(ActionListener actionListener) {
+        loginAsUserBUtton.addActionListener(actionListener);
     }
 
     private void personalizeButton(JButton button) {

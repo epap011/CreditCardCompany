@@ -1,4 +1,4 @@
-package view.ccc;
+package view.cccLogin;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;

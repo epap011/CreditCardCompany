@@ -1,9 +1,10 @@
 package view;
 
-import view.ccc.CccView;
+import view.cccLogin.CccView;
 import view.registration.CompanyRegistrationView;
 import view.registration.PrivateCitizenRegistrationView;
 import view.registration.SupplierRegistrationView;
+import view.userLogin.*;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -18,8 +19,14 @@ public class GUI extends JFrame{
     private PrivateCitizenRegistrationView privateCitizenRegistrationPanel;
     private SupplierRegistrationView supplierRegistrationPanel;
     private CccView cccView;
+    private UserLoginView userLoginView;
+    private PrivateCitizenUserView privateCitizenUserView;
+    private CompanyUserView companyUserView;
+    private SupplierUserView supplierUserView;
     private OverviewView overviewPanel;
+    private MakeTransactionView makeTransactionView;
     private CardLayout    cardLayout;
+    private ReturnView returnView;
 
     public GUI() {
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(220,220,240)));
@@ -27,7 +34,7 @@ public class GUI extends JFrame{
         this.setTitle("CCC App");
         this.setSize(825, 550);
         this.setMinimumSize(new Dimension(825, 550));
-        this.setResizable(true);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -49,7 +56,12 @@ public class GUI extends JFrame{
          supplierRegistrationPanel       = new SupplierRegistrationView(this);
          overviewPanel                   = new OverviewView(this);
          cccView                         = new CccView(this);
-
+         userLoginView                   = new UserLoginView(this);
+         privateCitizenUserView          = new PrivateCitizenUserView(this);
+         companyUserView                 = new CompanyUserView(this);
+         supplierUserView                = new SupplierUserView(this);
+         makeTransactionView             = new MakeTransactionView();
+         returnView                      = new ReturnView();
 
 
          cardPanel.add(homePanel, "home");
@@ -59,6 +71,12 @@ public class GUI extends JFrame{
          cardPanel.add(supplierRegistrationPanel, "supplierReg");
          cardPanel.add(overviewPanel, "overview");
          cardPanel.add(cccView, "ccc");
+         cardPanel.add(userLoginView, "userLogin");
+         cardPanel.add(privateCitizenUserView, "private_user_login");
+         cardPanel.add(companyUserView, "company_user_login");
+         cardPanel.add(supplierUserView, "supplier_user_login");
+         cardPanel.add(makeTransactionView, "make_transaction");
+         cardPanel.add(returnView, "return");
 
          this.add(cardPanel);
     }
@@ -66,6 +84,8 @@ public class GUI extends JFrame{
     public CardLayout getCardLayout() { return cardLayout; }
 
     public JPanel getCardPanel() { return cardPanel; }
+
+    public HomeView getHomePanel() {return homePanel; }
 
     public CompanyRegistrationView getCompanyRegistrationPanel() {
         return companyRegistrationPanel;
@@ -78,4 +98,12 @@ public class GUI extends JFrame{
     }
 
     public CccView getCccView() { return cccView; }
+
+    public UserLoginView getUserLoginView() { return userLoginView; }
+
+    public MakeTransactionView getMakeTransactionView() { return makeTransactionView; }
+
+    public ReturnView getReturnView() {return returnView; }
+
+    public PrivateCitizenUserView getPrivateCitizenUserView() {return privateCitizenUserView; }
 }
