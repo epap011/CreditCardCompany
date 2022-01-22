@@ -1,4 +1,4 @@
-package view.userLogin;
+package view.userLogin.privateCitizen;
 
 import view.GUI;
 
@@ -56,8 +56,20 @@ public class PrivateCitizenUserView extends JPanel {
         paydebtButton = new JButton("Pay debt");
         personalizeButton(paydebtButton);
         buttonsPanel.add(paydebtButton);
+        paydebtButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "payDebt");
+            }
+        });
 
         infoButton = new JButton("Info");
+        infoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "info");
+            }
+        });
         personalizeButton(infoButton);
         buttonsPanel.add(infoButton);
     }
@@ -82,5 +94,13 @@ public class PrivateCitizenUserView extends JPanel {
 
     public void addReturnButtonActionListener(ActionListener actionListener) {
         returnButton.addActionListener(actionListener);
+    }
+
+    public void addPayDebtActionListener(ActionListener actionListener) {
+        paydebtButton.addActionListener(actionListener);
+    }
+
+    public void addInfoActionListener(ActionListener actionListener) {
+        infoButton.addActionListener(actionListener);
     }
 }

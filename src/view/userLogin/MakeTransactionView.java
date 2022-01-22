@@ -22,7 +22,7 @@ public class MakeTransactionView extends JPanel {
         transactionLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
         this.add(transactionLabel);
 
-        availableSuppliersLabel.setBounds(220,150,100,20);
+        availableSuppliersLabel.setBounds(180,150,150,20);
         availableSuppliersLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
         this.add(availableSuppliersLabel);
 
@@ -65,6 +65,11 @@ public class MakeTransactionView extends JPanel {
 
     public void addBuyButtonActionListener(ActionListener actionListener) {
         buyButton.addActionListener(actionListener);
+    }
+
+    public void notEnoughMoney() {
+        JFrame f = new JFrame();
+        JOptionPane.showMessageDialog(f, "Not enough Money...");
     }
 
     public String getPrice() { return paymentAmounTextField.getText(); }

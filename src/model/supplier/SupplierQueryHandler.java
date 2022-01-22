@@ -29,7 +29,7 @@ public class SupplierQueryHandler {
     private static void insertAccount(int accountID, Supplier supplier) throws SQLException {
         String query;
 
-        query = " INSERT INTO Account VALUES (" + accountID + "," + supplier.getSupplierAccount().getIban() + "," + supplier.getSupplierAccount().getExpDate() + "," + true + "," + 1 + ")" + ";" ;
+        query = " INSERT INTO Account VALUES (" + accountID + "," + supplier.getSupplierAccount().getIban() + "," + supplier.getSupplierAccount().getExpDate() + "," + true + "," + 0 + ")" + ";" ;
 
         System.out.println("SQL Query: " + query);
         stmt.executeUpdate(query);

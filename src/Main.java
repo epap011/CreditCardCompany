@@ -12,10 +12,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        GUI gui = new GUI();
-        Generator model = new Generator();
-        ControllerContainer controllerContainer = new ControllerContainer(gui, model);
-
         try {
             DatabaseConnection ccc_database_connection = new DatabaseConnection("root", "!Abcd1234");
             CompanyQueryHandler.setStatement(ccc_database_connection.getStatement());
@@ -26,5 +22,8 @@ public class Main {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        GUI gui         = new GUI();
+        Generator model = new Generator();
+                          new ControllerContainer(gui, model);
     }
 }

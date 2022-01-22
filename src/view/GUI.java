@@ -5,6 +5,9 @@ import view.registration.CompanyRegistrationView;
 import view.registration.PrivateCitizenRegistrationView;
 import view.registration.SupplierRegistrationView;
 import view.userLogin.*;
+import view.userLogin.company.CompanyUserView;
+import view.userLogin.privateCitizen.PrivateCitizenUserView;
+import view.userLogin.supplier.SupplierUserView;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -27,6 +30,8 @@ public class GUI extends JFrame{
     private MakeTransactionView makeTransactionView;
     private CardLayout    cardLayout;
     private ReturnView returnView;
+    private PayDebtView payDebtView;
+    private InfoViewer infoViewer;
 
     public GUI() {
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(220,220,240)));
@@ -62,7 +67,8 @@ public class GUI extends JFrame{
          supplierUserView                = new SupplierUserView(this);
          makeTransactionView             = new MakeTransactionView();
          returnView                      = new ReturnView();
-
+         payDebtView                     = new PayDebtView();
+         infoViewer                      = new InfoViewer();
 
          cardPanel.add(homePanel, "home");
          cardPanel.add(userTypePanel,"user_type");
@@ -77,6 +83,8 @@ public class GUI extends JFrame{
          cardPanel.add(supplierUserView, "supplier_user_login");
          cardPanel.add(makeTransactionView, "make_transaction");
          cardPanel.add(returnView, "return");
+         cardPanel.add(payDebtView, "payDebt");
+         cardPanel.add(infoViewer, "info");
 
          this.add(cardPanel);
     }
@@ -106,4 +114,10 @@ public class GUI extends JFrame{
     public ReturnView getReturnView() {return returnView; }
 
     public PrivateCitizenUserView getPrivateCitizenUserView() {return privateCitizenUserView; }
+
+    public SupplierUserView getSupplierUserView() {return supplierUserView; }
+
+    public PayDebtView getPayDebtView() { return payDebtView; }
+
+    public InfoViewer getInfoViewer() {return infoViewer; }
 }

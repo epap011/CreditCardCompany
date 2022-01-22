@@ -1,4 +1,4 @@
-package view.userLogin;
+package view.userLogin.company;
 
 import view.GUI;
 

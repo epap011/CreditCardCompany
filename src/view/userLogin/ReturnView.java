@@ -22,7 +22,7 @@ public class ReturnView extends JPanel {
         transactionLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
         this.add(transactionLabel);
 
-        transactionsMadeLabel.setBounds(240,150,200,20);
+        transactionsMadeLabel.setBounds(210,150,200,20);
         transactionsMadeLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
         this.add(transactionsMadeLabel);
 
@@ -30,7 +30,7 @@ public class ReturnView extends JPanel {
         this.add(availableSuppliersComboBox);
 
         personalizeButton(returnButton);
-        returnButton.setBounds(480, 150, 50, 30);
+        returnButton.setBounds(480, 150, 110, 30);
         this.add(returnButton);
     }
 
