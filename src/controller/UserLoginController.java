@@ -18,11 +18,14 @@ public class UserLoginController {
         this.gui     = gui;
 
         this.gui.getPrivateCitizenUserView().addMakeTransactionButtonActionListener(new MakeTransactionButtonActionListener());
-        this.gui.getCompanyUserView().addMakeTransactionButtonActionListener(new CompanyMakeTransactionButtonActionListener());
         this.gui.getPrivateCitizenUserView().addReturnButtonActionListener(new MakeReturnButtonActionListener());
         this.gui.getPrivateCitizenUserView().addPayDebtActionListener(new PayDebtActionListener());
-        this.gui.getSupplierUserView().addPayDebtActionListener(new PayDebtActionListener());
         this.gui.getPrivateCitizenUserView().addInfoActionListener(new InfoButtonActionListener());
+
+        this.gui.getSupplierUserView().addPayDebtActionListener(new PayDebtActionListener());
+
+        this.gui.getCompanyUserView().addMakeTransactionButtonActionListener(new CompanyMakeTransactionButtonActionListener());
+        this.gui.getCompanyUserView().addReturnButtonActionListener(new MakeReturnButtonActionListener());
         this.gui.getCompanyUserView().addInfoActionListener(new CompanyInfoActionListener());
 
         this.theView.addLoginButtonActionListener(new LoginButtonActionListener());
@@ -145,8 +148,7 @@ public class UserLoginController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Return Button Pressed");
-            System.out.println("ComboBox value: " + gui.getReturnView().getComboBoxValue());
+            System.out.println("Inside Return Button Pressed");
             try {
                 UserLoginQueryHandler.refundTransaction((String)theView.getComboBoxValue(),Integer.parseInt((String)gui.getReturnView().getComboBoxValue()));
             } catch (SQLException ex) {
