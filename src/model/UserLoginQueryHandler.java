@@ -130,7 +130,7 @@ public class UserLoginQueryHandler {
         return  clientId;
     }
 
-    public static Boolean makeTransaction(String clientIban, int supplierId, float price) throws SQLException {
+    public static Boolean makeTransaction(String clientIban, String afmEmployee, int supplierId, float price) throws SQLException {
         String query, query1, query2;
 
         query = "select Account_id from Account where Account_IBAN = " + "\"" + clientIban +  "\";";
@@ -148,7 +148,7 @@ public class UserLoginQueryHandler {
         }
 
         query1 = "select p.F_USR_ID from Private_citizen p where p.F_USR_ID = " + clientId + ";";
-        query2 = "select c.F_USR_ID from Company c where c.F_USR_ID = " + clientId + ";";
+        query2 = "select F_USR_ID from Company where F_USR_ID = " + clientId + ";";
 
         String suppFirstName = "", suppLastName = "";
         query = "select Supp_First_Name, Supp_Last_Name from Supplier where F_USR_ID = " + supplierId + ";";
@@ -159,8 +159,8 @@ public class UserLoginQueryHandler {
         }
 
         System.out.println(query1);
-
         rs = stmt.executeQuery(query1);
+
         if(rs.next()) {
             if(Objects.equals(rs.getInt(1), clientId)) {
                 System.out.println(clientId + " is PrivateCitizen");
@@ -204,13 +204,47 @@ public class UserLoginQueryHandler {
             }
         }
 
+        System.out.println("SKATA");
+        System.out.println(query2);
         rs = stmt.executeQuery(query2);
+
         if(rs.next()) {
-            if(Objects.equals(rs.getString(1), clientId)) {
+            if(Objects.equals(rs.getInt(1), clientId)) {
                 System.out.println(clientId + " is Company");
 
+                String companyName = "";
+                query = "select CO_name from Company where F_USR_ID = " + clientId + ";";
+                rs = stmt.executeQuery(query);
+                if(rs.next()) companyName = rs.getString(1);
 
+                int transcationID = UserLoginQueryHandler.count("Transaction");
+                transcationID++;
 
+                query = "INSERT INTO Transaction VALUES(" + afmEmployee +"," + transcationID + ", " + "\"" + companyName + "\"" + "," + "\"" + suppFirstName + " " + suppLastName + "\"" + ", "
+                        + "'" + Generator.getCurrentDate() + "'" + ", "
+                        + (price < 0) + "," + price + ", " + supplierId + ", " + clientId + ");";
+
+                System.out.println(query);
+
+                stmt.executeUpdate(query);
+
+                query = "UPDATE Client_account SET Client_remaining = Client_remaining - " + price + " where F_Account_ID = " + clientId + ";";
+                stmt.executeUpdate(query);
+
+                query = "UPDATE Account SET Account_owedToCCC = Account_owedToCCC + " + price + " where Account_ID = " + clientId + ";";
+                stmt.executeUpdate(query);
+
+                query = "select Supp_commission from Supplier_account where F_Account_ID = " + supplierId + ";";
+                rs = stmt.executeQuery(query);
+                float commission = 0.0f;
+                if(rs.next()) {
+                    commission =  rs.getFloat(1);
+                }
+                float priceCommission = price-(price*commission);
+                query = "UPDATE Supplier_account SET Supp_netIncome = Supp_netIncome +" + priceCommission + " where F_Account_ID = " + supplierId + ";";
+                stmt.executeUpdate(query);
+                query = "UPDATE Account SET Account_owedToCCC = Account_owedToCCC + " + price*commission + " where Account_ID = " + supplierId+ ";";
+                stmt.executeUpdate(query);
             }
         }
 
@@ -462,6 +496,94 @@ public class UserLoginQueryHandler {
         return data;
     }
 
+    public static String[][] getTransactionHistoryOfEmployee(String iban, String employeeAfm, String dateFrom, String dateTo) throws SQLException {
+
+        int userID = convertIban2Id(iban);
+        String table;
+        String query1, query2;
+
+        int numOfTransaction;
+        String[][] data;
+        ResultSet rs;
+
+        table = "(select Transaction_transactionID, Transaction_clientName, Transaction_suppName, Transaction_type, Transaction_cost, Transaction_date\n" +
+                "from Transaction " +
+                "where (((Transaction_date >= \"" + dateFrom + "\") and (Transaction_date <= \"" + dateTo + "\"))  and "+ "F_Client_AccountID" + " = " + userID + "))a";
+
+        query1 = "select Transaction_transactionID, F_ID, Transaction_clientName, Transaction_suppName, Transaction_type, Transaction_cost, Transaction_date\n" +
+                "from Transaction " +
+                "where (((Transaction_date >= \"" + dateFrom + "\") and (Transaction_date <= \"" + dateTo + "\"))  and " + "F_Client_AccountID" + " = " + userID + ");";
+
+        if(employeeAfm.equals("ALL")) {
+            numOfTransaction = UserLoginQueryHandler.count(table);
+            data = new String[numOfTransaction][7];
+            rs = stmt.executeQuery(query1);
+        } else {
+            table = "(select Transaction_transactionID, F_ID, Transaction_clientName, Transaction_suppName, Transaction_type, Transaction_cost, Transaction_date " +
+                    "from (" + query1.substring(0, query1.length()-1) + ")a " + "where F_ID = " + employeeAfm + ")a";
+
+            numOfTransaction = UserLoginQueryHandler.count(table);
+            data = new String[numOfTransaction][7];
+
+            query2 = "select Transaction_transactionID, F_ID, Transaction_clientName, Transaction_suppName, Transaction_type, Transaction_cost, Transaction_date " +
+                    "from (" + query1.substring(0, query1.length()-1) + ")a " + "where F_ID = " + employeeAfm + ";";
+            rs = stmt.executeQuery(query2);
+        }
+
+        int user = 0;
+        try {
+            while (rs.next()) {
+                String tid          = rs.getString("Transaction_transactionID");
+                String fid          = rs.getString("F_ID");
+                String clientName   = rs.getString("Transaction_clientName");
+                String supplierName = rs.getString("Transaction_suppName");
+                String type         = rs.getString("Transaction_type");
+                String cost         = rs.getString("Transaction_cost");
+                String date         = rs.getString("Transaction_date");
+
+                data[user][0] = tid;
+                data[user][1] = fid;
+                data[user][2] = clientName;
+                data[user][3] = supplierName;
+                data[user][4] = type;
+                data[user][5] = cost;
+                data[user][6] = date;
+                user++;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static String[] getEmployeesOfCompany(String iban) throws SQLException {
+
+        int companyID = convertIban2Id(iban);
+        String query, table;
+        String[] data;
+
+        table = "(select distinct F_ID from Transaction where F_Client_AccountID = " + companyID + ")a";
+        query = "select distinct F_ID from Transaction where F_Client_AccountID = " + companyID + ";";
+
+        data = new String[UserLoginQueryHandler.count(table)];
+        ResultSet rs = stmt.executeQuery(query);
+
+        int user = 0;
+        try {
+            while (rs.next()) {
+                data[user++]  = rs.getString("F_ID");
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+
+    }
+
     public static String getOwedToCCC(String iban) throws SQLException {
 
         String query = "";
@@ -474,6 +596,25 @@ public class UserLoginQueryHandler {
         }
 
         return "";
+    }
+
+    public static String[] getAllEmployeesOfCompany(String iban) throws SQLException {
+        String query, table;
+        String[] data;
+        ResultSet rs;
+
+        table = "(select AFM from Employee where Employee_companyAccount = " + + convertIban2Id(iban) + ")a";
+        data  = new String[UserLoginQueryHandler.count(table)];
+
+        query = "select AFM from Employee where Employee_companyAccount = " + convertIban2Id(iban);
+        rs = stmt.executeQuery(query);
+
+        int user = 0;
+        while(rs.next()) {
+            data[user++]  = rs.getString("AFM");
+        }
+
+        return data;
     }
 
     private static int count(String table) throws SQLException {

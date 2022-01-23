@@ -18,16 +18,20 @@ public class UserLoginController {
         this.gui     = gui;
 
         this.gui.getPrivateCitizenUserView().addMakeTransactionButtonActionListener(new MakeTransactionButtonActionListener());
+        this.gui.getCompanyUserView().addMakeTransactionButtonActionListener(new CompanyMakeTransactionButtonActionListener());
         this.gui.getPrivateCitizenUserView().addReturnButtonActionListener(new MakeReturnButtonActionListener());
         this.gui.getPrivateCitizenUserView().addPayDebtActionListener(new PayDebtActionListener());
         this.gui.getSupplierUserView().addPayDebtActionListener(new PayDebtActionListener());
         this.gui.getPrivateCitizenUserView().addInfoActionListener(new InfoButtonActionListener());
+        this.gui.getCompanyUserView().addInfoActionListener(new CompanyInfoActionListener());
 
         this.theView.addLoginButtonActionListener(new LoginButtonActionListener());
         this.gui.getMakeTransactionView().addBuyButtonActionListener(new BuyButtonActionListener());
         this.gui.getReturnView().addReturnButtonActionListener(new ReturnButtonActionListener());
         this.gui.getPayDebtView().addPayButtonActionListener(new PayDebtClientButton());
         this.gui.getInfoViewer().addCheckButtonActionListener(new CheckButtonActionListener());
+        this.gui.getCompanyInfoView().addCheckButtonActionListener(new CompanyInfoCheckButtonActionListener());
+        this.gui.getCompanyMakeTransactionView().addBuyButtonActionListener(new CompanyBuyButtonActionListener());
 
         gui.getHomePanel().addLoginAsUserButtonActionListener(new LoginAsUserButtonActionListener());
     }
@@ -61,11 +65,25 @@ public class UserLoginController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("MakeTransaction Button Pressed");
+            System.out.println("Private Citizen MakeTransaction Button Pressed");
             try {
                 gui.getMakeTransactionView().setAccountIdsData(UserLoginQueryHandler.getSupplierIds());
             } catch (SQLException throwable) {
                 throwable.printStackTrace();
+            }
+        }
+    }
+
+    class CompanyMakeTransactionButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Company's MakeTransaction Button Pressed!");
+            try {
+                gui.getCompanyMakeTransactionView().setEmployeeAfmData(UserLoginQueryHandler.getAllEmployeesOfCompany((String)gui.getUserLoginView().getComboBoxValue()));
+                gui.getCompanyMakeTransactionView().setSupplierIdsData(UserLoginQueryHandler.getSupplierIds());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         }
     }
@@ -85,6 +103,25 @@ public class UserLoginController {
         }
     }
 
+    class CompanyBuyButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Company's Buy Button Pressed");
+            try {
+                if(!UserLoginQueryHandler.makeTransaction((String)theView.getComboBoxValue(),
+                        (String)gui.getCompanyMakeTransactionView().getEmployeeValue(),
+                        Integer.parseInt((String)gui.getCompanyMakeTransactionView().getSupplierValue()),
+                        Float.parseFloat(gui.getCompanyMakeTransactionView().getPrice()))) {
+                    gui.getMakeTransactionView().notEnoughMoney();
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     class BuyButtonActionListener implements ActionListener {
 
         @Override
@@ -92,7 +129,7 @@ public class UserLoginController {
             System.out.println("Buy Button Pressed");
             System.out.println("ComboBox value: " + gui.getMakeTransactionView().getComboBoxValue() + " Price: " + gui.getMakeTransactionView().getPrice());
             try {
-                if(!UserLoginQueryHandler.makeTransaction((String)theView.getComboBoxValue(),
+                if(!UserLoginQueryHandler.makeTransaction((String)theView.getComboBoxValue(), "invalid",
                         Integer.parseInt((String)gui.getMakeTransactionView().getComboBoxValue()),
                         Float.parseFloat(gui.getMakeTransactionView().getPrice()))) {
                     gui.getMakeTransactionView().notEnoughMoney();
@@ -163,6 +200,37 @@ public class UserLoginController {
         }
     }
 
+    class CompanyInfoActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Company's Info Button Pressed");
+            try {
+                gui.getCompanyInfoView().setAvailableEmployees(UserLoginQueryHandler.getEmployeesOfCompany((String)theView.getComboBoxValue()));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    class CompanyInfoCheckButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Company's Check button pressed!");
+            String userIban = (String)theView.getComboBoxValue();
+            String dateFrom = gui.getCompanyInfoView().getDateFrom();
+            String dateTo   = gui.getCompanyInfoView().getDateTo();
+            String employee = gui.getCompanyInfoView().getEmployee();
+            try {
+                gui.getCompanyInfoView().cleanTransactionHistoryTable();
+                gui.getCompanyInfoView().setTransactionHistory(UserLoginQueryHandler.getTransactionHistoryOfEmployee(userIban, employee, dateFrom, dateTo));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     class CheckButtonActionListener implements ActionListener {
 
         @Override
@@ -179,4 +247,5 @@ public class UserLoginController {
             }
         }
     }
+
 }

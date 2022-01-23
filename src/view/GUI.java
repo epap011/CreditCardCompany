@@ -5,6 +5,8 @@ import view.registration.CompanyRegistrationView;
 import view.registration.PrivateCitizenRegistrationView;
 import view.registration.SupplierRegistrationView;
 import view.userLogin.*;
+import view.userLogin.company.CompanyInfoView;
+import view.userLogin.company.CompanyMakeTransactionView;
 import view.userLogin.company.CompanyUserView;
 import view.userLogin.privateCitizen.PrivateCitizenUserView;
 import view.userLogin.supplier.SupplierUserView;
@@ -32,6 +34,8 @@ public class GUI extends JFrame{
     private ReturnView returnView;
     private PayDebtView payDebtView;
     private InfoViewer infoViewer;
+    private CompanyInfoView companyInfoView;
+    private CompanyMakeTransactionView companyMakeTransactionView;
 
     public GUI() {
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(220,220,240)));
@@ -39,7 +43,7 @@ public class GUI extends JFrame{
         this.setTitle("CCC App");
         this.setSize(825, 550);
         this.setMinimumSize(new Dimension(825, 550));
-        this.setResizable(false);
+        this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -69,6 +73,8 @@ public class GUI extends JFrame{
          returnView                      = new ReturnView();
          payDebtView                     = new PayDebtView();
          infoViewer                      = new InfoViewer();
+         companyInfoView                 = new CompanyInfoView();
+         companyMakeTransactionView      = new CompanyMakeTransactionView();
 
          cardPanel.add(homePanel, "home");
          cardPanel.add(userTypePanel,"user_type");
@@ -85,6 +91,8 @@ public class GUI extends JFrame{
          cardPanel.add(returnView, "return");
          cardPanel.add(payDebtView, "payDebt");
          cardPanel.add(infoViewer, "info");
+         cardPanel.add(companyInfoView, "companyInfo");
+         cardPanel.add(companyMakeTransactionView, "companyTransactions");
 
          this.add(cardPanel);
     }
@@ -111,13 +119,19 @@ public class GUI extends JFrame{
 
     public MakeTransactionView getMakeTransactionView() { return makeTransactionView; }
 
+    public CompanyMakeTransactionView getCompanyMakeTransactionView() { return companyMakeTransactionView; }
+
     public ReturnView getReturnView() {return returnView; }
 
     public PrivateCitizenUserView getPrivateCitizenUserView() {return privateCitizenUserView; }
 
     public SupplierUserView getSupplierUserView() {return supplierUserView; }
 
+    public CompanyUserView getCompanyUserView() {return companyUserView; }
+
     public PayDebtView getPayDebtView() { return payDebtView; }
 
     public InfoViewer getInfoViewer() {return infoViewer; }
+
+    public CompanyInfoView getCompanyInfoView() { return companyInfoView; }
 }

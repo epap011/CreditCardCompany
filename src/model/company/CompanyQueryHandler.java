@@ -25,7 +25,9 @@ public class CompanyQueryHandler {
         insertUsrType(registerID, company);
         insertClient(registerID);
         insertCompany(registerID, company);
+        insertEmployee(registerID, Integer.parseInt(company.getNumOfEmployees()));
     }
+
     private static void insertAccount(int accountID, Company company) throws SQLException {
         String query;
 
@@ -74,6 +76,17 @@ public class CompanyQueryHandler {
 
         System.out.println("SQL Query: " + query);
         stmt.executeUpdate(query);
+    }
+
+    private static void insertEmployee(int companyID, int numberOfEmployees) throws SQLException {
+        String query;
+
+        for(int i = 0; i < numberOfEmployees; i++) {
+            query = "INSERT INTO Employee VALUES ("+ Generator.ibanGenerate().substring(0, 10)+ "',"+ Generator.expDateGenerate() +","+ "\"69"+
+                    Generator.ibanGenerate().substring(1,9) + "\"," + companyID + ");";
+            System.out.println(query);
+            stmt.executeUpdate(query);
+        }
     }
 
     private static int count(String table) throws SQLException {
