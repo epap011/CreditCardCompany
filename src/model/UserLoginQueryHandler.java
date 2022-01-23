@@ -204,7 +204,6 @@ public class UserLoginQueryHandler {
             }
         }
 
-        System.out.println("SKATA");
         System.out.println(query2);
         rs = stmt.executeQuery(query2);
 

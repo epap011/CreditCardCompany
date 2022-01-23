@@ -31,7 +31,7 @@ public class CompanyQueryHandler {
     private static void insertAccount(int accountID, Company company) throws SQLException {
         String query;
 
-        query = " INSERT INTO Account VALUES (" + accountID + "," + company.getCompanyAccount().getIban() + "," + company.getCompanyAccount().getExpDate() + "," + true + "," + 1 + ")" + ";" ;
+        query = " INSERT INTO Account VALUES (" + accountID + "," + company.getCompanyAccount().getIban() + "," + company.getCompanyAccount().getExpDate() + "," + true + "," + 0 + ")" + ";" ;
 
         System.out.println("SQL Query: " + query);
         stmt.executeUpdate(query);
