@@ -26,6 +26,7 @@ public class UserLoginController {
 
         this.gui.getCompanyUserView().addMakeTransactionButtonActionListener(new CompanyMakeTransactionButtonActionListener());
         this.gui.getCompanyUserView().addReturnButtonActionListener(new MakeReturnButtonActionListener());
+        this.gui.getCompanyUserView().addPayDebtActionListener(new PayDebtActionListener());
         this.gui.getCompanyUserView().addInfoActionListener(new CompanyInfoActionListener());
 
         this.theView.addLoginButtonActionListener(new LoginButtonActionListener());
