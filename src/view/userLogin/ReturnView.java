@@ -1,5 +1,7 @@
 package view.userLogin;
 
+import view.GUI;
+
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
@@ -13,10 +15,17 @@ public class ReturnView extends JPanel {
     private JComboBox availableSuppliersComboBox = new JComboBox();
     private JTextField paymentAmounTextField = new JTextField();
     private JButton returnButton = new JButton("RETURN");
+    private JButton homeButton;
 
-    public ReturnView() {
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+
+    public ReturnView(GUI gui) {
         this.setLayout(null);
         this.setBackground(Color.WHITE);
+
+        this.cardLayout = gui.getCardLayout();
+        this.cardPanel  = gui.getCardPanel();
 
         transactionLabel.setBounds(330,20,200,20);
         transactionLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
@@ -32,6 +41,17 @@ public class ReturnView extends JPanel {
         personalizeButton(returnButton);
         returnButton.setBounds(480, 150, 110, 30);
         this.add(returnButton);
+
+        homeButton = new JButton("Home");
+        personalizeButton(homeButton);
+        homeButton.setBounds(360, 470,100,40);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "home");
+            }
+        });
+        this.add(homeButton);
     }
 
     private void personalizeButton(JButton button) {

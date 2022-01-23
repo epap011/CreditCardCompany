@@ -1,8 +1,11 @@
 package view.userLogin;
 
+import view.GUI;
+
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PayDebtView extends JPanel {
@@ -11,10 +14,16 @@ public class PayDebtView extends JPanel {
     private JLabel remainingLabel       = new JLabel("Remaining: ");
     private JTextField payDeptTextField = new JTextField();
     private JButton payDebtButton       = new JButton("PAY");
+    private JButton homeButton;
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
 
-    public PayDebtView() {
+    public PayDebtView(GUI gui) {
         this.setLayout(null);
         this.setBackground(Color.white);
+
+        this.cardLayout = gui.getCardLayout();
+        this.cardPanel  = gui.getCardPanel();
 
         initComponents();
     }
@@ -35,6 +44,17 @@ public class PayDebtView extends JPanel {
         personalizeButton(payDebtButton);
         payDebtButton.setBounds(260, 180, 50,25);
         this.add(payDebtButton);
+
+        homeButton = new JButton("Home");
+        personalizeButton(homeButton);
+        homeButton.setBounds(360, 470,100,40);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "home");
+            }
+        });
+        this.add(homeButton);
     }
 
     private void personalizeButton(JButton button) {

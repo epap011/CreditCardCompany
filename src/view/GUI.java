@@ -69,12 +69,12 @@ public class GUI extends JFrame{
          privateCitizenUserView          = new PrivateCitizenUserView(this);
          companyUserView                 = new CompanyUserView(this);
          supplierUserView                = new SupplierUserView(this);
-         makeTransactionView             = new MakeTransactionView();
-         returnView                      = new ReturnView();
-         payDebtView                     = new PayDebtView();
-         infoViewer                      = new InfoViewer();
-         companyInfoView                 = new CompanyInfoView();
-         companyMakeTransactionView      = new CompanyMakeTransactionView();
+         makeTransactionView             = new MakeTransactionView(this);
+         returnView                      = new ReturnView(this);
+         payDebtView                     = new PayDebtView(this);
+         infoViewer                      = new InfoViewer(this);
+         companyInfoView                 = new CompanyInfoView(this);
+         companyMakeTransactionView      = new CompanyMakeTransactionView(this);
 
          cardPanel.add(homePanel, "home");
          cardPanel.add(userTypePanel,"user_type");

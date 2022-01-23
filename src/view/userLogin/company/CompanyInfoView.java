@@ -1,9 +1,12 @@
 package view.userLogin.company;
 
+import view.GUI;
+
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CompanyInfoView extends JPanel {
@@ -14,15 +17,20 @@ public class CompanyInfoView extends JPanel {
     private JLabel transactionHistory = new JLabel("Transaction History");
     private JLabel fromLabel = new JLabel("from");
     private JLabel toLabel = new JLabel("to");
-    //private JLabel dateFormat = new JLabel("yyyy-mm-dd");
     private JComboBox availableEmployeesComboBox = new JComboBox();
     private JTextField dateFrom = new JTextField();
     private JTextField dateTo = new JTextField();
     private JButton chechButton = new JButton("check");
+    private JButton homeButton;
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
 
-    public CompanyInfoView() {
+    public CompanyInfoView(GUI gui) {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);
+
+        this.cardLayout = gui.getCardLayout();
+        this.cardPanel  = gui.getCardPanel();
 
         initComponents();
     }
@@ -57,6 +65,17 @@ public class CompanyInfoView extends JPanel {
         //topPanel.add(dateFormat);
 
         this.add(topPanel, BorderLayout.NORTH);
+
+        homeButton = new JButton("Home");
+        personalizeButton(homeButton);
+        homeButton.setBounds(360, 470,100,40);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "home");
+            }
+        });
+        this.add(homeButton, BorderLayout.SOUTH);
 
         initTransactionTable();
     }

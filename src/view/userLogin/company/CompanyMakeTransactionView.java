@@ -1,8 +1,12 @@
 package view.userLogin.company;
 
+import view.GUI;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CompanyMakeTransactionView extends JPanel {
@@ -14,10 +18,16 @@ public class CompanyMakeTransactionView extends JPanel {
     private JTextField paymentAmounTextField = new JTextField();
     private JComboBox availableEmployeesComboBox = new JComboBox();
     private JButton buyButton = new JButton("BUY");
+    private JButton homeButton;
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
 
-    public CompanyMakeTransactionView() {
+    public CompanyMakeTransactionView(GUI gui) {
         this.setLayout(null);
         this.setBackground(Color.WHITE);
+
+        this.cardLayout = gui.getCardLayout();
+        this.cardPanel  = gui.getCardPanel();
 
         transactionLabel.setBounds(330,20,200,20);
         transactionLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
@@ -44,6 +54,17 @@ public class CompanyMakeTransactionView extends JPanel {
         personalizeButton(buyButton);
         buyButton.setBounds(480, 150, 50, 30);
         this.add(buyButton);
+
+        homeButton = new JButton("Home");
+        personalizeButton(homeButton);
+        homeButton.setBounds(360, 470,100,40);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "home");
+            }
+        });
+        this.add(homeButton);
     }
 
     private void personalizeButton(JButton button) {

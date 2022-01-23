@@ -14,7 +14,7 @@ public class PrivateCitizenUserView extends JPanel {
     private JButton returnButton;
     private JButton paydebtButton;
     private JButton infoButton;
-
+    private JButton homeButton;
     private CardLayout cardLayout;
     private JPanel cardPanel;
 
@@ -72,6 +72,16 @@ public class PrivateCitizenUserView extends JPanel {
         });
         personalizeButton(infoButton);
         buttonsPanel.add(infoButton);
+
+        homeButton = new JButton("Home");
+        personalizeButton(homeButton);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "home");
+            }
+        });
+        this.add(homeButton, BorderLayout.SOUTH);
     }
 
     private void personalizeButton(JButton button) {

@@ -5,6 +5,7 @@ import view.GUI;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserLoginView extends JPanel {
@@ -13,6 +14,7 @@ public class UserLoginView extends JPanel {
     private JPanel cardPanel;
     private JComboBox usersComboBox;
     private JButton loginButton;
+    private JButton homeButton;
 
 
     public UserLoginView(GUI gui) {
@@ -30,6 +32,17 @@ public class UserLoginView extends JPanel {
         personalizeButton(loginButton);
         loginButton.setBounds(430,200,80,25);
         this.add(loginButton);
+
+        homeButton = new JButton("Home");
+        personalizeButton(homeButton);
+        homeButton.setBounds(360, 470,100,40);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "home");
+            }
+        });
+        this.add(homeButton);
     }
 
     private void personalizeButton(JButton button) {
