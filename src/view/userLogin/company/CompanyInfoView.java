@@ -128,6 +128,7 @@ public class CompanyInfoView extends JPanel {
 
     public void setAvailableEmployees(String[] data) {
         availableEmployeesComboBox.removeAllItems();
+        availableEmployeesComboBox.addItem("ALL");
         for (String datum : data) {
             availableEmployeesComboBox.addItem(datum);
         }
