@@ -97,7 +97,4 @@ CREATE TABLE Transaction (
     F_Supp_AccountID 				INT,
     F_Client_AccountID 				INT,
     PRIMARY KEY(Transaction_transactionID, Transaction_type),
-    FOREIGN KEY (F_ID) 		 		 REFERENCES Employee(AFM),
-    FOREIGN KEY (F_Client_AccountID) REFERENCES Client(F_Client_AccountID),
-    FOREIGN KEY (F_Supp_AccountID) 	 REFERENCES Supplier(F_Supp_AccountID)
 );
