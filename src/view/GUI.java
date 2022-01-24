@@ -40,7 +40,7 @@ public class GUI extends JFrame{
     public GUI() {
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(220,220,240)));
 
-        this.setTitle("CCC App");
+        this.setTitle("Credit Card Company");
         this.setSize(825, 550);
         this.setMinimumSize(new Dimension(825, 550));
         this.setResizable(true);

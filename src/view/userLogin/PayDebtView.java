@@ -72,7 +72,7 @@ public class PayDebtView extends JPanel {
     }
 
     public void setRemainingLabel(String remaining) {
-        String s = "Remaining: ";
+        String s = "Owed To CCC: ";
         s+= remaining;
         remainingLabel.setText(s);
     }
