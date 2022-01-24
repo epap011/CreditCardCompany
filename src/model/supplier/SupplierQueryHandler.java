@@ -17,7 +17,7 @@ public class SupplierQueryHandler {
     public static void registerSupplier(Supplier supplier) throws SQLException {
         int registerID;
 
-        registerID = SupplierQueryHandler.count("Account");
+        registerID = SupplierQueryHandler.maxID("Account", "Account_ID");
         registerID++;
 
         insertAccount(registerID, supplier);
@@ -73,6 +73,14 @@ public class SupplierQueryHandler {
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         return rs.getInt(1);
+    }
+
+    private static int maxID(String table, String column) throws SQLException {
+        String query = "select max(" + column + ") from " + table + ";";
+        ResultSet rs = stmt.executeQuery(query);
+
+        if(rs.next()) return rs.getInt(1);
+        return 0;
     }
 
     public static void setStatement(Statement stmt) { SupplierQueryHandler.stmt = stmt; }

@@ -159,11 +159,13 @@ public class CccQueryHandler {
         if(rs.next()) {
             if(Objects.equals(rs.getString(1), id)) {
                 System.out.println(id + " is Company");
+                String deleteEmployee      = "delete from Employee where Employee_companyAccount = " + id + ";";
                 String deleteCompanyQuery  = "delete from Company where F_USR_id = " + id + ";";
                 String deleteClientQuery   = "delete from Client where F_USR_id = " + id + ";";
                 String deleteUser          = "delete from USR_type where USR_id = " + id + ";";
                 String deleteClientAccount = "delete from Client_account where f_account_id = " + id + ";";
                 String deleteAccount       = "delete from Account where Account_id = " + id + ";";
+                stmt.executeUpdate(deleteEmployee);
                 stmt.executeUpdate(deleteCompanyQuery);
                 stmt.executeUpdate(deleteClientQuery);
                 stmt.executeUpdate(deleteUser);
@@ -194,7 +196,7 @@ public class CccQueryHandler {
     private static int count(String table) throws SQLException {
         String query = "SELECT COUNT(*) FROM " + table + ";";
         ResultSet rs = stmt.executeQuery(query);
-        rs.next();
-        return rs.getInt(1);
+        if(rs.next()) return rs.getInt(1);
+        return 0;
     }
 }

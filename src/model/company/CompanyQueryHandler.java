@@ -17,7 +17,7 @@ public class CompanyQueryHandler {
     public static void registerCompany(Company company) throws SQLException {
         int registerID;
 
-        registerID = CompanyQueryHandler.count("Account");
+        registerID = CompanyQueryHandler.maxID("Account", "Account_ID");
         registerID++;
 
         insertAccount(registerID, company);
@@ -94,6 +94,14 @@ public class CompanyQueryHandler {
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         return rs.getInt(1);
+    }
+
+    private static int maxID(String table, String column) throws SQLException {
+        String query = "select max(" + column + ") from " + table + ";";
+        ResultSet rs = stmt.executeQuery(query);
+
+        if(rs.next()) return rs.getInt(1);
+        return 0;
     }
 
     public static void setStatement(Statement stmt) { CompanyQueryHandler.stmt = stmt; }

@@ -17,7 +17,7 @@ public class PrivateCitizenQueryHandler {
     public static void registerPrivateCitizen(PrivateCitizen privateCitizen) throws SQLException {
         int registerID;
 
-        registerID = PrivateCitizenQueryHandler.count("Account");
+        registerID = PrivateCitizenQueryHandler.maxID("Account", "Account_ID");
         registerID++;
 
         insertAccount(registerID, privateCitizen);
@@ -83,6 +83,14 @@ public class PrivateCitizenQueryHandler {
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         return rs.getInt(1);
+    }
+
+    private static int maxID(String table, String column) throws SQLException {
+        String query = "select max(" + column + ") from " + table + ";";
+        ResultSet rs = stmt.executeQuery(query);
+
+        if(rs.next()) return rs.getInt(1);
+        return 0;
     }
 
     public static void setStatement(Statement stmt) { PrivateCitizenQueryHandler.stmt = stmt; }

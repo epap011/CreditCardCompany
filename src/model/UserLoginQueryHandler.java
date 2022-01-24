@@ -96,13 +96,13 @@ public class UserLoginQueryHandler {
         String query, query1;
 
         System.out.println("Get Transactions of " + clientId);
-        query  = "select * from Transaction where \n" +
-                "(transaction_transactionID not in (select transaction_transactionID \n" +
-                "from Transaction where ((transaction_type = 1) and (F_Client_AccountID = " + clientId + "))));";
+        query  = "select * from Transaction where " +
+                "(transaction_transactionID not in (select transaction_transactionID " +
+                "from Transaction where (transaction_type = 1)) and F_Client_AccountID = " + clientId + ");";
 
-        query1 = "select * from Transaction where \n" +
-                "(transaction_transactionID not in (select transaction_transactionID \n" +
-                "from Transaction where ((transaction_type = 1) and (F_Client_AccountID = " + clientId + "))))";
+        query1 = "select * from Transaction where " +
+                "(transaction_transactionID not in (select transaction_transactionID " +
+                "from Transaction where (transaction_type = 1)) and F_Client_AccountID = " + clientId + ")";
 
         String[] data = new String[UserLoginQueryHandler.count("(" + query1 + ")a")];
 
