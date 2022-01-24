@@ -95,6 +95,7 @@ public class UserLoginQueryHandler {
     public static String[] getTransactionIdsBasedOn(int clientId) throws SQLException {
         String query, query1;
 
+        System.out.println("Get Transactions of " + clientId);
         query  = "select * from Transaction where \n" +
                 "(transaction_transactionID not in (select transaction_transactionID \n" +
                 "from Transaction where ((transaction_type = 1) and (F_Client_AccountID = " + clientId + "))));";
@@ -334,10 +335,51 @@ public class UserLoginQueryHandler {
 
         rs = stmt.executeQuery(query2);
         if(rs.next()) {
-            if(Objects.equals(rs.getString(1), clientId)) {
+            if(Objects.equals(rs.getInt(1), clientId)) {
                 System.out.println(clientId + " is Company");
 
+                String companyName = "";
+                query = "select CO_name from Company where F_Client_accountID = " + clientId + ";";
+                rs = stmt.executeQuery(query);
+                if(rs.next()) {
+                    companyName = rs.getString(1);
+                    System.out.println(companyName);
+                }
 
+                String afm = "";
+
+                query = "select F_ID from Transaction where Transaction_transactionID = " + transactionID + ";";
+                rs = stmt.executeQuery(query);
+                if(rs.next()) afm = rs.getString(1);
+
+                query = "INSERT INTO Transaction VALUES("+ afm +"," + transactionID + ", " + "\"" + companyName + "\"" + "," + "\"" + suppFirstName + " " + suppLastName + "\"" + ", "
+                        + "'" + Generator.getCurrentDate() + "'" + ", "
+                        + (cost < 0) + "," + cost + ", " + supplierId + ", " + clientId + ");";
+
+                System.out.println(query);
+
+                stmt.executeUpdate(query);
+
+                cost *= -1;
+                query = "UPDATE Client_account SET Client_remaining = Client_remaining + " + cost + " where F_Account_ID = "+ clientId +";";
+                stmt.executeUpdate(query);
+
+                query = "select Supp_commission from Supplier_account where F_Account_ID = " + supplierId + ";";
+                rs = stmt.executeQuery(query);
+                float commission = 0.0f;
+                if(rs.next()) {
+                    commission =  rs.getFloat(1);
+                }
+                float costCommission = cost-(cost*commission); //100 - (100*0.09) = 100 - (-91) = 100 - 91 = 9
+
+                query = "UPDATE Account SET Account_owedToCCC = Account_owedToCCC - " + cost*commission + " where Account_ID = "+ supplierId +";";
+                stmt.executeUpdate(query);
+
+                query = "UPDATE Account SET Account_owedToCCC = Account_owedToCCC - " + cost + " where Account_ID = "+ clientId +";";
+                stmt.executeUpdate(query);
+
+                query = "UPDATE Supplier_account SET Supp_netIncome = Supp_netIncome - " + costCommission + " where F_Account_ID = "+ supplierId +";";
+                stmt.executeUpdate(query);
 
             }
         }
