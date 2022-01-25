@@ -15,11 +15,9 @@ public class PrivateCitizenRegistrationController {
     private PrivateCitizenRegistrationView theView;
     private Generator theModel;
 
-    public PrivateCitizenRegistrationController(PrivateCitizenRegistrationView theView, Generator theModel) {
+    public PrivateCitizenRegistrationController(PrivateCitizenRegistrationView theView) {
 
         this.theView  = theView;
-        this.theModel = theModel;
-
         this.theView.addDoneButtonListener(new DoneButtonListener() );
     }
 

@@ -22,8 +22,7 @@ public class Main {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        GUI gui         = new GUI();
-        Generator model = new Generator();
-                          new ControllerContainer(gui, model);
+        GUI gui = new GUI();
+        new ControllerContainer(gui);
     }
 }

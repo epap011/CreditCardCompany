@@ -17,31 +17,31 @@ import java.awt.*;
 
 public class GUI extends JFrame{
 
-    private JPanel        cardPanel;
-    private HomeView homePanel;
-    private UserTypeView userTypePanel;
-    private CompanyRegistrationView companyRegistrationPanel;
+    private JPanel                         cardPanel;
+    private HomeView                       homePanel;
+    private UserTypeView                   userTypePanel;
+    private CompanyRegistrationView        companyRegistrationPanel;
     private PrivateCitizenRegistrationView privateCitizenRegistrationPanel;
-    private SupplierRegistrationView supplierRegistrationPanel;
-    private CccView cccView;
-    private UserLoginView userLoginView;
-    private PrivateCitizenUserView privateCitizenUserView;
-    private CompanyUserView companyUserView;
-    private SupplierUserView supplierUserView;
-    private OverviewView overviewPanel;
-    private MakeTransactionView makeTransactionView;
-    private CardLayout    cardLayout;
-    private ReturnView returnView;
-    private PayDebtView payDebtView;
-    private InfoViewer infoViewer;
-    private CompanyInfoView companyInfoView;
-    private CompanyMakeTransactionView companyMakeTransactionView;
+    private SupplierRegistrationView       supplierRegistrationPanel;
+    private CccView                        cccView;
+    private UserLoginView                  userLoginView;
+    private PrivateCitizenUserView         privateCitizenUserView;
+    private CompanyUserView                companyUserView;
+    private SupplierUserView               supplierUserView;
+    private OverviewView                   overviewPanel;
+    private MakeTransactionView            makeTransactionView;
+    private CardLayout                     cardLayout;
+    private ReturnView                     returnView;
+    private PayDebtView                    payDebtView;
+    private InfoViewer                     infoViewer;
+    private CompanyInfoView                companyInfoView;
+    private CompanyMakeTransactionView     companyMakeTransactionView;
 
     public GUI() {
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(220,220,240)));
 
         this.setTitle("Credit Card Company");
-        this.setSize(825, 550);
+        this.setSize(800, 500);
         this.setMinimumSize(new Dimension(825, 550));
         this.setResizable(true);
         this.setLocationRelativeTo(null);

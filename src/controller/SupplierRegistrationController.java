@@ -15,11 +15,9 @@ public class SupplierRegistrationController {
     private SupplierRegistrationView theView;
     private Generator theModel;
 
-    public SupplierRegistrationController(SupplierRegistrationView theView, Generator theModel) {
+    public SupplierRegistrationController(SupplierRegistrationView theView) {
 
         this.theView = theView;
-        this.theModel = theModel;
-
         this.theView.addDoneButtonListener(new DoneButtonListener() );
     }
 

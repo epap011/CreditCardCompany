@@ -13,13 +13,10 @@ import java.sql.SQLException;
 public class CompanyRegistrationController {
 
     private CompanyRegistrationView theView;
-    private Generator theModel;
 
-    public CompanyRegistrationController(CompanyRegistrationView theView, Generator theModel) {
+    public CompanyRegistrationController(CompanyRegistrationView theView) {
 
         this.theView  = theView;
-        this.theModel = theModel;
-
         this.theView.addDoneButtonListener(new DoneButtonListener() );
     }
 

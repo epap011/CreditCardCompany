@@ -15,7 +15,7 @@ public class UserTypeView extends JPanel {
     private JButton supplierButton;
 
     private CardLayout cardLayout;
-    private JPanel cardPanel;
+    private JPanel     cardPanel;
 
     public UserTypeView(GUI gui) {
         this.setBackground(new Color(248,248,255));

@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 public class HomeView extends JPanel {
 
     private final JButton loginAsCccButton   = new JButton("login as CCC");
-    private final JButton loginAsUserBUtton  = new JButton("login");
+    private final JButton loginAsUserButton  = new JButton("login");
     private final JButton register2CccButton = new JButton("register");
     private CardLayout cardLayout;
     private JPanel cardPanel;
@@ -53,8 +53,8 @@ public class HomeView extends JPanel {
             }
         });
 
-        personalizeButton(loginAsUserBUtton);
-        loginAsUserBUtton.addActionListener(new ActionListener() {
+        personalizeButton(loginAsUserButton);
+        loginAsUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "userLogin");
@@ -71,13 +71,13 @@ public class HomeView extends JPanel {
 
         this.add(loginAsCccButton);
         this.add(Box.createHorizontalStrut(70));
-        this.add(loginAsUserBUtton);
+        this.add(loginAsUserButton);
         this.add(Box.createHorizontalStrut(10));
         this.add(register2CccButton);
     }
 
     public void addLoginAsUserButtonActionListener(ActionListener actionListener) {
-        loginAsUserBUtton.addActionListener(actionListener);
+        loginAsUserButton.addActionListener(actionListener);
     }
 
     private void personalizeButton(JButton button) {
